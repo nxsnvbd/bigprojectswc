@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-toolbar class="ion-text-center">
+    <ion-title [routerLink]="['/main']"><img src="assets/logo2.png"/></ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="main-menu"></ion-menu-button>
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title color="danger">
+        <h2 align="center" ><strong>Update Profile</strong></h2>      
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="floating">Name </ion-label>
+        <ion-input type="text" [(ngModel)]="user.name" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Email</ion-label>
+        <ion-input type="text" [(ngModel)]="user.email" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Password</ion-label>
+        <ion-input type="text" [(ngModel)]="user.password" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">DOB</ion-label><br>
+        <ion-input type="date" [(ngModel)]="user.date" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Telephone Number</ion-label>
+        <ion-input type="text" [(ngModel)]="user.telephone" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Address</ion-label>
+        <ion-input type="text" [(ngModel)]="user.address" required></ion-input>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+    <ion-button expand="block" (click)="updateUser(user)" color="danger">
+      <ion-icon slot="start" name="send"></ion-icon>Update
+    </ion-button>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="secondary">
+      <ion-button [routerLink]="['/main']">
+        <ion-icon slot="icon-only" name="home"></ion-icon>
+      </ion-button>
+      <ion-button [routerLink]="['/profile']">
+        <ion-icon slot="icon-only" name="person"></ion-icon>
+      </ion-button>
+      <ion-button [routerLink]="['/cart']">
+        <ion-icon slot="icon-only" name="cart"></ion-icon>
+      </ion-button>
+      <ion-button [routerLink]="['/home']">
+        <ion-icon slot="icon-only" name="log-out"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="primary">
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

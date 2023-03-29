@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar class="ion-text-center">
+    <ion-title [routerLink]="['/main']"><img src="assets/logo2.png"/></ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="main-menu"></ion-menu-button>
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <h3 align="center"><strong>Chunky Trainers</strong></h3>
+  <h4 align="center"><strong>RM85</strong></h4>
+
+  <img src="assets/men2.png"/>
+  <p align="justify">&nbsp;Trainers in piqué with imitation suede and imitation leather sections. 
+    Padded top edge, a tongue and lacing at the front and a loop at the back. </p>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="secondary">
+      <ion-button [routerLink]="['/main']">
+        <ion-icon slot="icon-only" name="home"></ion-icon>
+      </ion-button>
+      <ion-button [routerLink]="['/profile']">
+        <ion-icon slot="icon-only" name="person"></ion-icon>
+      </ion-button>
+      <ion-button [routerLink]="['/cart']">
+        <ion-icon slot="icon-only" name="cart"></ion-icon>
+      </ion-button>
+      <ion-button [routerLink]="['/home']">
+        <ion-icon slot="icon-only" name="log-out"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="primary">
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

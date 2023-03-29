@@ -1,0 +1,309 @@
+<ion-header>
+  <ion-toolbar class="ion-text-center">
+    <ion-title [routerLink]="['/main']"><img src="assets/logo2.png"/></ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="main-menu"></ion-menu-button>
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <h2 align="center"><strong>Add To Cart</strong></h2>
+
+  <h3 align="center"><strong>Men</strong></h3>
+
+  <ion-card>
+    <img src="assets/men.png" />
+    <ion-card-header>
+      <ion-card-title align="center">Small Shoulder Bag</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <p align="center">
+        <ion-button (click)="decrementQuantity(0)" color="danger"><ion-icon style="margin-inline: unset;"
+            name="remove-outline"></ion-icon></ion-button>
+        <ion-chip color="danger">{{ quantityService.itemQuantities[0] }}</ion-chip>
+        <ion-button (click)="incrementQuantity(0)" color="danger"><ion-icon style="margin-inline: unset;"
+            name="add-outline"></ion-icon></ion-button>
+    </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <img src="assets/men2.png" />
+      <ion-card-header>
+        <ion-card-title align="center">Chunky Trainers</ion-card-title>
+      </ion-card-header>
+  
+      <ion-card-content>
+        <p align="center">
+          <ion-button (click)="decrementQuantity(1)" color="danger"><ion-icon style="margin-inline: unset;"
+              name="remove-outline"></ion-icon></ion-button>
+          <ion-chip color="danger">{{ quantityService.itemQuantities[1] }}</ion-chip>
+          <ion-button (click)="incrementQuantity(1)" color="danger"><ion-icon style="margin-inline: unset;"
+              name="add-outline"></ion-icon></ion-button>
+      </ion-card-content>
+      </ion-card>
+
+      <ion-card>
+        <img src="assets/men3.png" />
+        <ion-card-header>
+          <ion-card-title align="center">Tie Dye TShirt</ion-card-title>
+        </ion-card-header>
+    
+        <ion-card-content>
+          <p align="center">
+            <ion-button (click)="decrementQuantity(2)" color="danger"><ion-icon style="margin-inline: unset;"
+                name="remove-outline"></ion-icon></ion-button>
+            <ion-chip color="danger">{{ quantityService.itemQuantities[2] }}</ion-chip>
+            <ion-button (click)="incrementQuantity(2)" color="danger"><ion-icon style="margin-inline: unset;"
+                name="add-outline"></ion-icon></ion-button>
+        </ion-card-content>
+        </ion-card>
+
+        <ion-card>
+          <img src="assets/men4.png" />
+          <ion-card-header>
+            <ion-card-title align="center">Swim Shorts</ion-card-title>
+          </ion-card-header>
+      
+          <ion-card-content>
+            <p align="center">
+              <ion-button (click)="decrementQuantity(3)" color="danger"><ion-icon style="margin-inline: unset;"
+                  name="remove-outline"></ion-icon></ion-button>
+              <ion-chip color="danger">{{ quantityService.itemQuantities[3] }}</ion-chip>
+              <ion-button (click)="incrementQuantity(3)" color="danger"><ion-icon style="margin-inline: unset;"
+                  name="add-outline"></ion-icon></ion-button>
+          </ion-card-content>
+          </ion-card>
+
+          <h3 align="center"><strong>Women</strong></h3>
+
+          <ion-card>
+            <img src="assets/women.png" />
+            <ion-card-header>
+              <ion-card-title align="center">Flared Tailored Trousers</ion-card-title>
+            </ion-card-header>
+        
+            <ion-card-content>
+              <p align="center">
+                <ion-button (click)="decrementQuantity(4)" color="danger"><ion-icon style="margin-inline: unset;"
+                    name="remove-outline"></ion-icon></ion-button>
+                <ion-chip color="danger">{{ quantityService.itemQuantities[4] }}</ion-chip>
+                <ion-button (click)="incrementQuantity(4)" color="danger"><ion-icon style="margin-inline: unset;"
+                    name="add-outline"></ion-icon></ion-button>
+            </ion-card-content>
+            </ion-card>
+
+            <ion-card>
+              <img src="assets/women2.png" />
+              <ion-card-header>
+                <ion-card-title align="center">Knot-Detailed Satin Dress</ion-card-title>
+              </ion-card-header>
+          
+              <ion-card-content>
+                <p align="center">
+                  <ion-button (click)="decrementQuantity(5)" color="danger"><ion-icon style="margin-inline: unset;"
+                      name="remove-outline"></ion-icon></ion-button>
+                  <ion-chip color="danger">{{ quantityService.itemQuantities[5] }}</ion-chip>
+                  <ion-button (click)="incrementQuantity(5)" color="danger"><ion-icon style="margin-inline: unset;"
+                      name="add-outline"></ion-icon></ion-button>
+              </ion-card-content>
+              </ion-card>
+
+              <ion-card>
+                <img src="assets/women3.png" />
+                <ion-card-header>
+                  <ion-card-title align="center">Viscose-blend Kaftan Dress</ion-card-title>
+                </ion-card-header>
+            
+                <ion-card-content>
+                  <p align="center">
+                    <ion-button (click)="decrementQuantity(6)" color="danger"><ion-icon style="margin-inline: unset;"
+                        name="remove-outline"></ion-icon></ion-button>
+                    <ion-chip color="danger">{{ quantityService.itemQuantities[6] }}</ion-chip>
+                    <ion-button (click)="incrementQuantity(6)" color="danger"><ion-icon style="margin-inline: unset;"
+                        name="add-outline"></ion-icon></ion-button>
+                </ion-card-content>
+                </ion-card>
+
+                <ion-card>
+                  <img src="assets/women4.png" />
+                  <ion-card-header>
+                    <ion-card-title align="center">Patterned Trousers
+                    </ion-card-title>
+                  </ion-card-header>
+              
+                  <ion-card-content>
+                    <p align="center">
+                      <ion-button (click)="decrementQuantity(7)" color="danger"><ion-icon style="margin-inline: unset;"
+                          name="remove-outline"></ion-icon></ion-button>
+                      <ion-chip color="danger">{{ quantityService.itemQuantities[7] }}</ion-chip>
+                      <ion-button (click)="incrementQuantity(7)" color="danger"><ion-icon style="margin-inline: unset;"
+                          name="add-outline"></ion-icon></ion-button>
+                  </ion-card-content>
+                  </ion-card>
+
+                  <h3 align="center"><strong>Kids</strong></h3>
+
+                  <ion-card>
+                    <img src="assets/kids.png" />
+                    <ion-card-header>
+                      <ion-card-title align="center">Tulle-skirt dress
+                      </ion-card-title>
+                    </ion-card-header>
+                
+                    <ion-card-content>
+                      <p align="center">
+                        <ion-button (click)="decrementQuantity(8)" color="danger"><ion-icon style="margin-inline: unset;"
+                            name="remove-outline"></ion-icon></ion-button>
+                        <ion-chip color="danger">{{ quantityService.itemQuantities[8] }}</ion-chip>
+                        <ion-button (click)="incrementQuantity(8)" color="danger"><ion-icon style="margin-inline: unset;"
+                            name="add-outline"></ion-icon></ion-button>
+                    </ion-card-content>
+                    </ion-card>
+                
+                    <ion-card>
+                      <img src="assets/kids2.png" />
+                      <ion-card-header>
+                        <ion-card-title align="center">Printed Hoodies
+                        </ion-card-title>
+                      </ion-card-header>
+                  
+                      <ion-card-content>
+                        <p align="center">
+                          <ion-button (click)="decrementQuantity(9)" color="danger"><ion-icon style="margin-inline: unset;"
+                              name="remove-outline"></ion-icon></ion-button>
+                          <ion-chip color="danger">{{ quantityService.itemQuantities[9] }}</ion-chip>
+                          <ion-button (click)="incrementQuantity(9)" color="danger"><ion-icon style="margin-inline: unset;"
+                              name="add-outline"></ion-icon></ion-button>
+                      </ion-card-content>
+                      </ion-card>
+
+                      <ion-card>
+                        <img src="assets/kids3.png" />
+                        <ion-card-header>
+                          <ion-card-title align="center">Tulle-sleeved Jersey top
+
+                          </ion-card-title>
+                        </ion-card-header>
+                    
+                        <ion-card-content>
+                          <p align="center">
+                            <ion-button (click)="decrementQuantity(10)" color="danger"><ion-icon style="margin-inline: unset;"
+                                name="remove-outline"></ion-icon></ion-button>
+                            <ion-chip color="danger">{{ quantityService.itemQuantities[10] }}</ion-chip>
+                            <ion-button (click)="incrementQuantity(10)" color="danger"><ion-icon style="margin-inline: unset;"
+                                name="add-outline"></ion-icon></ion-button>
+                        </ion-card-content>
+                        </ion-card>
+
+                        <ion-card>
+                          <img src="assets/kids4.png" />
+                          <ion-card-header>
+                            <ion-card-title align="center">Printed Track Jacket
+                            </ion-card-title>
+                          </ion-card-header>
+                      
+                          <ion-card-content>
+                            <p align="center">
+                              <ion-button (click)="decrementQuantity(11)" color="danger"><ion-icon style="margin-inline: unset;"
+                                  name="remove-outline"></ion-icon></ion-button>
+                              <ion-chip color="danger">{{ quantityService.itemQuantities[11] }}</ion-chip>
+                              <ion-button (click)="incrementQuantity(11)" color="danger"><ion-icon style="margin-inline: unset;"
+                                  name="add-outline"></ion-icon></ion-button>
+                          </ion-card-content>
+                          </ion-card>
+
+                          <h3 align="center"><strong>Sports</strong></h3>
+
+                          <ion-card>
+                            <img src="assets/sports.png" />
+                            <ion-card-header>
+                              <ion-card-title align="center">DryMove™ Sports top
+                              </ion-card-title>
+                            </ion-card-header>
+                        
+                            <ion-card-content>
+                              <p align="center">
+                                <ion-button (click)="decrementQuantity(12)" color="danger"><ion-icon style="margin-inline: unset;"
+                                    name="remove-outline"></ion-icon></ion-button>
+                                <ion-chip color="danger">{{ quantityService.itemQuantities[12] }}</ion-chip>
+                                <ion-button (click)="incrementQuantity(12)" color="danger"><ion-icon style="margin-inline: unset;"
+                                    name="add-outline"></ion-icon></ion-button>
+                            </ion-card-content>
+                            </ion-card>
+
+                            <ion-card>
+                              <img src="assets/sports2.png" />
+                              <ion-card-header>
+                                <ion-card-title align="center">DryMove™ Boxy-style Sports Vest Top
+                                </ion-card-title>
+                              </ion-card-header>
+                          
+                              <ion-card-content>
+                                <p align="center">
+                                  <ion-button (click)="decrementQuantity(13)" color="danger"><ion-icon style="margin-inline: unset;"
+                                      name="remove-outline"></ion-icon></ion-button>
+                                  <ion-chip color="danger">{{ quantityService.itemQuantities[13] }}</ion-chip>
+                                  <ion-button (click)="incrementQuantity(13)" color="danger"><ion-icon style="margin-inline: unset;"
+                                      name="add-outline"></ion-icon></ion-button>
+                              </ion-card-content>
+                              </ion-card>
+
+                              <ion-card>
+                                <img src="assets/sports3.png" />
+                                <ion-card-header>
+                                  <ion-card-title align="center">DryMove™ Seamless Sports Cycling Shorts
+                                  </ion-card-title>
+                                </ion-card-header>
+                            
+                                <ion-card-content>
+                                  <p align="center">
+                                    <ion-button (click)="decrementQuantity(14)" color="danger"><ion-icon style="margin-inline: unset;"
+                                        name="remove-outline"></ion-icon></ion-button>
+                                    <ion-chip color="danger">{{ quantityService.itemQuantities[14] }}</ion-chip>
+                                    <ion-button (click)="incrementQuantity(14)" color="danger"><ion-icon style="margin-inline: unset;"
+                                        name="add-outline"></ion-icon></ion-button>
+                                </ion-card-content>
+                                </ion-card>
+
+                                <ion-card>
+                                  <img src="assets/sports4.png" />
+                                  <ion-card-header>
+                                    <ion-card-title align="center">Sports Bag
+                                    </ion-card-title>
+                                  </ion-card-header>
+                              
+                                  <ion-card-content>
+                                    <p align="center">
+                                      <ion-button (click)="decrementQuantity(15)" color="danger"><ion-icon style="margin-inline: unset;"
+                                          name="remove-outline"></ion-icon></ion-button>
+                                      <ion-chip color="danger">{{ quantityService.itemQuantities[15] }}</ion-chip>
+                                      <ion-button (click)="incrementQuantity(15)" color="danger"><ion-icon style="margin-inline: unset;"
+                                          name="add-outline"></ion-icon></ion-button>
+                                  </ion-card-content>
+                                  </ion-card>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="secondary">
+      <ion-button [routerLink]="['/main']">
+        <ion-icon slot="icon-only" name="home"></ion-icon>
+      </ion-button>
+      <ion-button [routerLink]="['/profile']">
+        <ion-icon slot="icon-only" name="person"></ion-icon>
+      </ion-button>
+      <ion-button [routerLink]="['/cart']">
+        <ion-icon slot="icon-only" name="cart"></ion-icon>
+      </ion-button>
+      <ion-button [routerLink]="['/home']">
+        <ion-icon slot="icon-only" name="log-out"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="primary">
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
+

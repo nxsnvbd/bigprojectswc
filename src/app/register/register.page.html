@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar color="danger" class="ion-text-center">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Register</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-item>
+    <ion-label position="floating">Name</ion-label>
+    <ion-input type="text" [(ngModel)]="user.name" required></ion-input >
+  </ion-item>
+
+    <ion-item>
+    <ion-label position="floating">E-mail</ion-label>
+    <ion-input type="email" [(ngModel)]="user.email" required></ion-input >
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Password</ion-label>
+    <ion-input type="password" [(ngModel)]="user.password" required></ion-input >
+  </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Date of Birth</ion-label><br>
+      <ion-input type="date" [(ngModel)]="user.date" required></ion-input>
+    </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Telephone number</ion-label>
+    <ion-input type="text" [(ngModel)]="user.telephone" required></ion-input >
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Address</ion-label>
+    <ion-input type="text" [(ngModel)]="user.address" required></ion-input >
+  </ion-item>
+
+<ion-button class="ion-padding" expand="full" shape="round" color="danger" (click)="register(user)">
+<ion-icon slot="start" name="send"></ion-icon>Submit </ion-button>
+
+</ion-content>
