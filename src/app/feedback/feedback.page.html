@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+        <ion-buttons slot="start">
+      <ion-menu-button menu="main-menu"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <h3 align="center"><strong>Feedback/Complaint</strong></h3>
+  <ion-grid>
+    <ion-row>
+      <ion-col>Date</ion-col>
+      <ion-col>Title</ion-col>
+      <ion-col>Status</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>1 Aug 2025</ion-col>
+      <ion-col><ion-button [routerLink]="['/feedback-details']">
+        Title
+      </ion-button></ion-col>
+      <ion-col>Pending</ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button routerLink="/feedback-create">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

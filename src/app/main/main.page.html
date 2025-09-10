@@ -1,6 +1,5 @@
 <ion-header>
-  <ion-toolbar class="ion-text-center">
-    <ion-title><img src="assets/logo2.png"/></ion-title>
+  <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button menu="main-menu"></ion-menu-button>
     </ion-buttons>
@@ -8,40 +7,42 @@
 </ion-header>
 
 <ion-content>
-<br>
-    <img src="assets/iklan.png"/>
+  <h3 align="center"><strong>Dashboard</strong></h3>
+  <ion-list>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Announcement Title</ion-card-title>
+        <ion-card-subtitle>12 Aug 2024</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <p>This is the content of the announcement.</p>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
 
-  <h4 align="center"><strong>Best Selling:</strong></h4>
-
-  <ion-grid>
-
-    <ion-row>
-      <ion-col [routerLink]="['/women']"><img src="assets/women.png"/></ion-col>
-      <ion-col [routerLink]="['/men']"><img src="assets/men.png"/></ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col [routerLink]="['/kids']"><img src="assets/kids.png"/></ion-col>
-      <ion-col [routerLink]="['/sports']"><img src="assets/sports.png"/></ion-col>
-    </ion-row>
-
-  </ion-grid>
-
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button routerLink="/announcement-create">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
 
 <ion-footer>
   <ion-toolbar>
-    <ion-buttons slot="secondary">
+    <ion-buttons slot="start" class="footer-buttons">
       <ion-button [routerLink]="['/main']">
         <ion-icon slot="icon-only" name="home"></ion-icon>
       </ion-button>
-      <ion-button [routerLink]="['/profile']">
-        <ion-icon slot="icon-only" name="person"></ion-icon>
+      <ion-button [routerLink]="['/attendance']">
+        <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
       </ion-button>
-      <ion-button [routerLink]="['/cart']">
-        <ion-icon slot="icon-only" name="cart"></ion-icon>
+      <ion-button [routerLink]="['/media']">
+        <ion-icon slot="icon-only" name="images-outline"></ion-icon>
       </ion-button>
-      <ion-button [routerLink]="['/home']">
+      <ion-button [routerLink]="['/feedback']">
+        <ion-icon slot="icon-only" name="chatbox-outline"></ion-icon>
+      </ion-button>
+      <ion-button [routerLink]="['/login']">
         <ion-icon slot="icon-only" name="log-out"></ion-icon>
       </ion-button>
     </ion-buttons>

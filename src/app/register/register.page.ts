@@ -32,7 +32,7 @@ user = {} as User;
 
     try{
         
-    await this.firestore.collection("register").add(user);
+    await this.firestore.collection("user").add(user);
   } catch (e:any){
     this.showToast(e);
   }
@@ -83,23 +83,13 @@ user = {} as User;
       return false;
     }
 
+    if(!this.user.username){
+      this.showToast("Enter username");
+      return false;
+    }
+
      if(!this.user.password){
       this.showToast("Enter password");
-      return false;
-    }
-
-     if(!this.user.date){
-      this.showToast("Enter date of birth");
-      return false;
-    }
-
-     if(!this.user.telephone){
-      this.showToast("Enter telephone number");
-      return false;
-    }
-
-     if(!this.user.address){
-      this.showToast("Enter address");
       return false;
     }
 

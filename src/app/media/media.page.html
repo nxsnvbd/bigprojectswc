@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Media Sharing</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="main-menu"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <h3 align="center"><strong>Media Sharing</strong></h3>
+  <ion-list>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Media Title</ion-card-title>
+        <ion-card-subtitle>Uploaded: 25 Aug 2025</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        Details/Description (have picture also)
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button routerLink="/media-create">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
