@@ -2,9 +2,10 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'io.ionic.starter',
-  appName: 'bigproject',
-  webDir: 'www',
-  bundledWebRuntime: false
+  appName: 'PTAOne',
+  webDir: 'www'
 };
 
 export default config;
+
+

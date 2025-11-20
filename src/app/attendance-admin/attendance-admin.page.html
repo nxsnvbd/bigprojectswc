@@ -2,21 +2,26 @@
   <ion-toolbar>
     <ion-title>Attendance</ion-title>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-menu-button menu="main-menu"></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <h3 align="center"><strong>Attendance</strong></h3>
-  <ion-list>
-    <ion-card-header>
-      <ion-card-title> Event Title</ion-card-title>
-      <ion-card-subtitle>Present: 20 | Absent: 5</ion-card-subtitle>
-    </ion-card-header>
-    </ion-list>
 
-    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-list>
+    <ion-card *ngFor="let item of attendanceList | async">
+      <ion-card-header>
+        <ion-card-title>{{ item.title }}</ion-card-title>
+        <ion-card-subtitle>
+          Present: {{ item.present || 0 }} | Absent: {{ item.absent || 0 }}
+        </ion-card-subtitle>
+      </ion-card-header>
+    </ion-card>
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button routerLink="/attendance-create">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>

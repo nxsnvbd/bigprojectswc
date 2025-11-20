@@ -1,29 +1,122 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Media Sharing</ion-title>
+  <ion-toolbar style="--background: #681380; --color: #ffffff">
     <ion-buttons slot="start">
       <ion-menu-button menu="main-menu"></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <h3 align="center"><strong>Media Sharing</strong></h3>
-  <ion-list>
-    <ion-card>
+<ion-content class="ion-padding">
+
+  <h1 class="ion-text-center"><strong>Media Sharing</strong></h1>
+
+  <!-- 🖼️ Media List -->
+  <ion-list *ngIf="mediaList && mediaList.length > 0; else noMedia">
+    <ion-card
+      *ngFor="let m of mediaList"
+      class="ion-margin-bottom"
+      style="--background: #F3EDF5; border-radius: 16px;"
+    >
+      <!-- Header -->
       <ion-card-header>
-        <ion-card-title>Media Title</ion-card-title>
-        <ion-card-subtitle>Uploaded: 25 Aug 2025</ion-card-subtitle>
+        <ion-card-title>
+          <strong>{{ m.title }}</strong>
+        </ion-card-title>
       </ion-card-header>
+
+      <!-- Content -->
       <ion-card-content>
-        Details/Description (have picture also)
+        <p class="ion-text-justify">{{ m.details }}</p>
+
+        <!-- 📸 Image Preview with Click-to-View -->
+        <!-- 🖼️ Image Slider -->
+        <div *ngIf="m.photos && m.photos.length > 0" class="ion-margin-top">
+          <ion-slides pager="true" [options]="slideOpts" [pager]="m.photos.length > 1">
+            <ion-slide *ngFor="let photo of m.photos">
+              <a [href]="photo" target="_blank">
+                <img
+                  [src]="photo"
+                  alt="Media photo"
+                  style="width: 100%; border-radius: 12px; max-height: 300px; object-fit: cover; cursor: pointer;"
+                />
+              </a>
+            </ion-slide>
+          </ion-slides>
+          <small style="color: black; display: block; margin-top: 6px; text-align: center;">
+            Swipe or click image to view
+          </small>
+        </div>
+
+<!-- 📄 PDF Download Buttons (supports multiple PDFs) -->
+<div *ngIf="m.pdfs && m.pdfs.length > 0" class="ion-margin-top">
+  <ion-button
+    *ngFor="let pdf of m.pdfs"
+    expand="block"
+    fill="outline"
+    shape="round"
+    color="dark"
+    (click)="downloadAndOpenPDF(pdf)"
+  >
+    <ion-icon name="document-outline" slot="start"></ion-icon>
+    {{ pdf.name || 'PDF File' }}
+  </ion-button>
+</div>
+
+<!-- 🗑️ Delete Button (Admins Only) -->
+<ion-button
+  *ngIf="userRole === 'admin'"
+  expand="block"
+  shape="round"
+  color="danger"
+  (click)="deleteMedia(m.id)"
+  class="ion-margin-top"
+>
+  <ion-icon name="trash" slot="start"></ion-icon>
+  Delete
+</ion-button>
+
       </ion-card-content>
     </ion-card>
   </ion-list>
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button routerLink="/media-create">
+  <!-- 📭 No Media Available -->
+  <ng-template #noMedia>
+    <div class="ion-text-center ion-padding">
+      <ion-icon name="image-outline" size="large" color="medium"></ion-icon>
+      <p style="margin-top: 10px; color: gray;">No media shared yet</p>
+    </div>
+  </ng-template>
+
+  <!-- ➕ Floating Add Button (Admins Only) -->
+  <ion-fab *ngIf="userRole === 'admin'" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button routerLink="/media-create" style="--background: #681380; --color: #ffffff">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 </ion-content>
+
+<!-- 🧭 Footer Navigation -->
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="start" class="footer-buttons" style="justify-content: space-around; width: 100%;">
+      <ion-button routerLink="/main">
+        <ion-icon slot="icon-only" name="home-outline"></ion-icon>
+      </ion-button>
+      <ion-button routerLink="/attendance">
+        <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
+      </ion-button>
+      <ion-button routerLink="/media">
+        <ion-icon slot="icon-only" name="images-outline"></ion-icon>
+      </ion-button>
+      <ion-button routerLink="/feedback">
+        <ion-icon slot="icon-only" name="chatbox-outline"></ion-icon>
+      </ion-button>
+      <ion-button *ngIf="userRole === 'member'" routerLink="/profile">
+        <ion-icon slot="icon-only" name="person-outline"></ion-icon>
+      </ion-button>
+      <ion-button routerLink="/login">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

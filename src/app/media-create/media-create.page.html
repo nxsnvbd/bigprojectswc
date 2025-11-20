@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar style="--background: #681380; --color: #ffffff">
     <ion-buttons slot="start">
       <ion-menu-button menu="main-menu"></ion-menu-button>
       <ion-back-button></ion-back-button>
@@ -7,15 +7,103 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <h3 align="center"><strong>Create New Media</strong></h3>
+<ion-content class="ion-padding">
+  <h2 align="center"><strong>Create New Media</strong></h2>
+
+  <!-- Title -->
   <ion-item>
     <ion-label position="floating">Title</ion-label>
-    <ion-input label="Title" label-placement="floating"></ion-input>
+    <ion-input [(ngModel)]="title"></ion-input>
   </ion-item>
+
+  <!-- Description -->
   <ion-item>
     <ion-label position="floating">Description</ion-label>
-    <ion-textarea label="Description" label-placement="floating"></ion-textarea>
+    <ion-textarea [(ngModel)]="details"></ion-textarea>
   </ion-item>
-  <ion-button expand="block">Upload Media</ion-button>
+
+  <!-- Photo Upload -->
+  <ion-item lines="none">
+    <ion-label><strong>Photos</strong></ion-label>
+  </ion-item>
+
+  <div class="file-upload">
+    <ion-button expand="block" color="medium" (click)="photoInput.click()" shape="round">
+      <ion-icon name="image-outline" slot="start"></ion-icon>
+      Choose Photos
+    </ion-button>
+    <input
+      type="file"
+      hidden
+      #photoInput
+      (change)="onPhotoSelected($event)"
+      multiple
+      accept="image/jpeg,image/jpg,image/png,image/webp"
+    />
+  </div>
+
+  <!-- Preview selected photos -->
+  <ion-grid *ngIf="photoPreviews.length > 0">
+    <ion-row>
+      <ion-col
+        size="6"
+        *ngFor="let preview of photoPreviews; let i = index"
+        class="ion-text-center"
+      >
+        <ion-card>
+          <img [src]="preview" style="width: 100%; height: 150px; object-fit: cover" />
+          <ion-button
+            color="danger"
+            fill="clear"
+            size="small"
+            (click)="removePhoto(i)"
+          >
+            <ion-icon name="trash-outline"></ion-icon>
+            Delete
+          </ion-button>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- PDF Upload -->
+  <ion-item lines="none">
+    <ion-label><strong>PDF Files</strong></ion-label>
+  </ion-item>
+
+  <div class="file-upload">
+    <ion-button expand="block" color="medium" (click)="pdfInput.click()" shape="round">
+      <ion-icon name="document-text-outline" slot="start"></ion-icon>
+      Choose PDFs
+    </ion-button>
+    <input
+      type="file"
+      hidden
+      #pdfInput
+      (change)="onPdfSelected($event)"
+      multiple
+      accept="application/pdf"
+    />
+  </div>
+
+  <!-- Show selected PDF names -->
+  <ion-list *ngIf="pdfFiles.length > 0">
+    <ion-item *ngFor="let file of pdfFiles">
+      <ion-icon name="document-outline" slot="start" color="primary"></ion-icon>
+      <ion-label>{{ file.name }}</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <br />
+
+  <!-- Upload Button -->
+  <ion-button
+    expand="full"
+    shape="round"
+    (click)="uploadMedia()"
+    style="--background: #681380; --color: #ffffff"
+  >
+    <ion-icon slot="start"></ion-icon>
+    Upload Media
+  </ion-button>
 </ion-content>

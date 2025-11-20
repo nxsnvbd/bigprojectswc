@@ -1,62 +1,110 @@
 <ion-header>
-  <ion-toolbar class="ion-text-center">
-    <ion-title [routerLink]="['/main']"><img src="assets/logo2.png"/></ion-title>
+  <ion-toolbar style="--background: #681380; --color: #ffffff">
     <ion-buttons slot="start">
       <ion-menu-button menu="main-menu"></ion-menu-button>
-      <ion-back-button></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
+  <h1 class="ion-text-center" style="margin-top: 15px;"><strong>User Profile</strong></h1>
 
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>
-        <h2 align="center"><strong>User Profile</strong></h2>      
-      </ion-card-title>
-    </ion-card-header>
+  <!-- ✅ Compact Profile Card -->
+  <ion-card
+    *ngIf="userProfile; else noUser"
+    style="--background: #EAE4EB; width: 90%; max-width: 400px; margin: 20px auto; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"
+  >
     <ion-card-content>
-      <ion-item>
-        <ion-label>Name: {{userProfile?.name}}</ion-label>
+      <ion-item lines="none" style="--background: transparent;">
+        <ion-label position="stacked"><strong>Name</strong></ion-label>
+        <ion-input [(ngModel)]="userProfile.name" [disabled]="!isEditing"></ion-input>
       </ion-item>
-      <ion-item>
-        <ion-label>Email: {{userProfile?.email}}</ion-label>
+
+      <ion-item lines="none" style="--background: transparent;">
+        <ion-label position="stacked"><strong>Email (cannot edit)</strong></ion-label>
+        <ion-input [(ngModel)]="userProfile.email" disabled></ion-input>
       </ion-item>
-      <ion-item>
-        <ion-label>Password: {{userProfile?.password}}</ion-label>
+
+      <ion-item lines="none" style="--background: transparent;">
+        <ion-label position="stacked"><strong>Username</strong></ion-label>
+        <ion-input [(ngModel)]="userProfile.username" [disabled]="!isEditing"></ion-input>
       </ion-item>
-      <ion-item>
-        <ion-label>Date of Birth: {{userProfile?.date}}</ion-label>
+
+      <ion-item lines="none" style="--background: transparent;">
+        <ion-label position="stacked"><strong>Password</strong></ion-label>
+        <ion-input
+          type="password"
+          [(ngModel)]="userProfile.password"
+          [disabled]="!isEditing"
+        ></ion-input>
       </ion-item>
-      <ion-item>
-        <ion-label>Telephone Number: {{userProfile?.telephone}}</ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-label>Address: {{userProfile?.address}}</ion-label>
-      </ion-item>
+
+      <div class="ion-padding">
+        <ion-button
+          *ngIf="!isEditing"
+          expand="block"
+          shape="round"
+          style="--background: #681380; --color: #ffffff"
+          (click)="enableEdit()"
+        >
+          Edit Profile
+        </ion-button>
+
+        <ion-button
+          *ngIf="isEditing"
+          expand="block"
+          shape="round"
+          style="--background: #681380; --color: #ffffff"
+          (click)="saveProfile()"
+        >
+          Save Changes
+        </ion-button>
+      </div>
     </ion-card-content>
   </ion-card>
+
+  <!-- 🟡 No User Found Template -->
+  <ng-template #noUser>
+    <ion-card
+      style="--background: #EAE4EB; width: 90%; max-width: 400px; margin: 20px auto; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"
+    >
+      <ion-card-content class="ion-text-center">
+        <ion-icon name="person-circle-outline" size="large" color="medium"></ion-icon>
+        <p style="margin-top: 8px; color: gray; font-size: 1.1em;">
+          No profile found.
+        </p>
+      </ion-card-content>
+    </ion-card>
+  </ng-template>
 </ion-content>
 
+<!-- ===== FOOTER NAVIGATION ===== -->
 <ion-footer>
   <ion-toolbar>
-    <ion-buttons slot="secondary">
-      <ion-button [routerLink]="['/main']">
-        <ion-icon slot="icon-only" name="home"></ion-icon>
+    <ion-buttons slot="start" class="footer-buttons">
+      <ion-button routerLink="/main">
+        <ion-icon slot="icon-only" name="home-outline"></ion-icon>
       </ion-button>
-      <ion-button [routerLink]="['/profile']">
-        <ion-icon slot="icon-only" name="person"></ion-icon>
+
+      <ion-button routerLink="/attendance">
+        <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
       </ion-button>
-      <ion-button [routerLink]="['/cart']">
-        <ion-icon slot="icon-only" name="cart"></ion-icon>
+
+      <ion-button routerLink="/media">
+        <ion-icon slot="icon-only" name="images-outline"></ion-icon>
       </ion-button>
-      <ion-button [routerLink]="['/home']">
-        <ion-icon slot="icon-only" name="log-out"></ion-icon>
+
+      <ion-button routerLink="/feedback">
+        <ion-icon slot="icon-only" name="chatbox-outline"></ion-icon>
       </ion-button>
-    </ion-buttons>
-    <ion-buttons slot="primary">
+
+      <ion-button routerLink="/profile" >
+        <ion-icon slot="icon-only" name="person-outline"></ion-icon>
+      </ion-button>
+
+      <ion-button routerLink="/login">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-footer>
-

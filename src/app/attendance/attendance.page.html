@@ -1,54 +1,121 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Attendance</ion-title>
+  <ion-toolbar style="--background: #681380; --color: #ffffff">
     <ion-buttons slot="start">
       <ion-menu-button menu="main-menu"></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <h3 align="center"><strong>Attendance</strong></h3>
-  <ion-list>
-    <ion-card-header>
-      <ion-card-title> Event Title</ion-card-title>
-      <ion-card-subtitle> Event Date</ion-card-subtitle>
-    </ion-card-header>
-    <ion-card-content>
-        <div class="ion-margin-top">
-          <ion-button size="small" color="success">Present</ion-button>
-          <ion-button size="small" color="danger">Absent</ion-button>
-        </div>
-      </ion-card-content>
-  </ion-list>
+<ion-content class="ion-padding">
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button routerLink="/attendance-create">
+  <!-- ===== MEMBER VIEW ===== -->
+  <div *ngIf="userRole === 'member'">
+    <h1 class="ion-text-center"><strong>Attendance</strong></h1>
+
+    <!-- No Events Message -->
+    <div *ngIf="attendanceData.length === 0" class="ion-text-center ion-margin-top">
+      <ion-icon name="calendar-clear-outline" size="large" color="medium"></ion-icon>
+      <p class="ion-margin-top" style="font-size: 1.1em; color: gray;">
+        No upcoming events.
+      </p>
+    </div>
+
+    <!-- Member Event List -->
+    <ion-list class="ion-padding-horizontal">
+      <ion-card
+        *ngFor="let item of attendanceList | async"
+        [id]="item.attendanceID"
+        style="--background: #EAE4EB; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); max-width: 600px; margin: 16px auto;"
+      >
+        <ion-card-header>
+          <ion-card-title class="ion-text-center"><strong>{{ item.title }}</strong></ion-card-title>
+          <ion-card-subtitle class="ion-text-center">
+            Event Date: {{ item.date ? (item.date | date:'dd MMM yyyy') : 'No date set' }}
+          </ion-card-subtitle>
+        </ion-card-header>
+
+        <ion-card-content class="ion-text-center">
+          <ion-button color="success" shape="round" expand="block" (click)="markAttendance(item.attendanceID, 'Present')">
+            Present
+          </ion-button>
+          <ion-button color="danger" shape="round" expand="block" (click)="markAttendance(item.attendanceID, 'Absent')">
+            Absent
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    </ion-list>
+  </div>
+
+  <!-- ===== ADMIN VIEW ===== -->
+  <div *ngIf="userRole === 'admin'">
+    <h1 class="ion-text-center"><strong>Attendance Management</strong></h1>
+
+    <ion-list class="ion-padding-horizontal">
+      <ion-card
+        *ngFor="let item of attendanceList | async"
+        style="--background: #EAE4EB; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); max-width: 600px; margin: 16px auto;"
+      >
+        <ion-card-header>
+          <ion-card-title class="ion-text-center"><strong>{{ item.title }}</strong></ion-card-title>
+          <ion-card-subtitle class="ion-text-center">
+            Event Date: {{ item.date ? (item.date | date:'dd MMM yyyy') : 'No date set' }} <br>
+            Present: {{ item.present || 0 }} | Absent: {{ item.absent || 0 }}
+          </ion-card-subtitle>
+        </ion-card-header>
+
+        <ion-card-content>
+          <ion-button
+            fill="outline"
+            expand="block"
+            color="dark"
+            shape="round"
+            (click)="generateAttendanceReport(item.attendanceID, item.title)"
+          >
+            View Attendance Report
+          </ion-button>
+        </ion-card-content>
+      </ion-card> 
+    </ion-list>
+  </div>
+
+  <!-- ===== ADD BUTTON (Admins Only) ===== -->
+  <ion-fab *ngIf="userRole === 'admin'" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button routerLink="/attendance-create" style="--background: #681380; --color: #ffffff">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+
 </ion-content>
 
+<!-- ===== FOOTER NAVIGATION ===== -->
 <ion-footer>
   <ion-toolbar>
     <ion-buttons slot="start" class="footer-buttons">
-      <ion-button [routerLink]="['/main']">
-        <ion-icon slot="icon-only" name="home"></ion-icon>
+
+      <ion-button routerLink="/main">
+        <ion-icon slot="icon-only" name="home-outline"></ion-icon>
       </ion-button>
-      <ion-button [routerLink]="['/attendance']">
+
+      <ion-button routerLink="/attendance">
         <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
       </ion-button>
-      <ion-button [routerLink]="['/media']">
+
+      <ion-button routerLink="/media">
         <ion-icon slot="icon-only" name="images-outline"></ion-icon>
       </ion-button>
-      <ion-button [routerLink]="['/feedback']">
+
+      <ion-button routerLink="/feedback">
         <ion-icon slot="icon-only" name="chatbox-outline"></ion-icon>
       </ion-button>
-      <ion-button [routerLink]="['/login']">
-        <ion-icon slot="icon-only" name="log-out"></ion-icon>
+
+      <ion-button *ngIf="userRole === 'member'" routerLink="/profile">
+        <ion-icon slot="icon-only" name="person-outline"></ion-icon>
       </ion-button>
-    </ion-buttons>
-    <ion-buttons slot="primary">
+
+      <ion-button routerLink="/login">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
+
     </ion-buttons>
   </ion-toolbar>
 </ion-footer>

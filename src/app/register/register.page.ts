@@ -1,107 +1,72 @@
-import { Component, OnInit } from '@angular/core';
-import {AngularFireAuth} from '@angular/fire/compat/auth';
-import {AngularFirestore} from '@angular/fire/compat/firestore';
-import{ LoadingController,NavController, ToastController} from '@ionic/angular';
-import {User} from '../models/user.mode';
+import { Component } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
 })
-export class RegisterPage implements OnInit {
-user = {} as User;
+export class RegisterPage {
+  user = {
+    name: '',
+    email: '',
+    username: '',
+    password: ''
+  };
+
+  showPassword: boolean = false;
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
+
   constructor(
-    private toastCtrl: ToastController,
-    private loadingCtrl: LoadingController,
     private afAuth: AngularFireAuth,
-    private navCtrl: NavController,
-    private firestore: AngularFirestore
-    ) { }
+    private firestore: AngularFirestore,
+    private router: Router,
+    private toastCtrl: ToastController
+  ) {}
 
-  ngOnInit() {
-  }
+  async register(user: any) {
+    try {
+      // ✅ Create user in Firebase Authentication
+      const result = await this.afAuth.createUserWithEmailAndPassword(
+        user.email,
+        user.password
+      );
 
-    async createUser(user: User){
-    if(this.formValidation()){
-      //show loader
-      let loader = this.loadingCtrl.create({
-        message: "Please wait..."
-      });
-      (await loader).present();
+      if (result.user) {
+        const uid = result.user.uid;
 
-    try{
-        
-    await this.firestore.collection("user").add(user);
-  } catch (e:any){
-    this.showToast(e);
-  }
-    //dismiss loader
-    (await loader).dismiss();
+        await this.firestore.collection('users').doc(result.user.uid).set({
+          uid: result.user.uid,
+          name: user.name,
+          email: user.email,
+          username: user.username,
+          password: user.password,  // ⚠️ optional, not secure
+          role: 'member',
+          dateCreated: new Date()
+        });
 
-    //redirect to home page
-    this.navCtrl.navigateRoot("main");
-    }
-  }
-
-  async register (user: User) {
-    if (this.formValidation()) {
-      //show loader
-      let loader = this.loadingCtrl.create({
-        message: "Please wait..."
-      });
-      (await loader).present();
-
-      try {
-        localStorage.setItem('useremail', user.email);
-        await this.afAuth
-        .createUserWithEmailAndPassword (user.email, user.password)
-        .then (data =>
-          console.log(data));
-
-          await this.createUser(user);
-
-          //redirect to main page
-          this.navCtrl.navigateRoot("main");
-      } catch (err:any) {
-        this.showToast (err);
+        this.showToast('Account created successfully');
+        this.router.navigate(['/login']);
       }
-
-      //dismiss loader
-      (await loader).dismiss();
+    } catch (error: any) {
+      console.error('Registration error:', error);
+      this.showToast(error.message || 'Registration failed', 'danger');
     }
   }
 
-  formValidation(){
-    if(!this.user.name){
-      this.showToast("Enter name");
-      return false;
-    }
-
-    if(!this.user.email){
-      this.showToast("Enter email");
-      return false;
-    }
-
-    if(!this.user.username){
-      this.showToast("Enter username");
-      return false;
-    }
-
-     if(!this.user.password){
-      this.showToast("Enter password");
-      return false;
-    }
-
-    return true;
+  private async showToast(message: string, color: string = 'dark') {
+    const toast = await this.toastCtrl.create({
+      message,
+      duration: 3000,
+      position: 'bottom',
+      color
+    });
+    toast.present();
   }
-
-  showToast (message:string){
-    this.toastCtrl.create({
-      message: message,
-      duration: 3000
-    })
-    .then(toastData => toastData.present());
-   }
-
 }

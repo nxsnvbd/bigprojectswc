@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar style="--background: #681380; --color: #ffffff">
     <ion-buttons slot="start">
       <ion-menu-button menu="main-menu"></ion-menu-button>
       <ion-back-button></ion-back-button>
@@ -8,23 +8,29 @@
 </ion-header>
 
 <ion-content>
-  <h3 align="center"><strong>Submit Feedback/Complaint</strong></h3>
+  <h3 align="center"><strong>Feedback/Complaint Submission</strong></h3>
+
   <ion-item>
     <ion-label position="floating">Title</ion-label>
-    <ion-input type="title" required></ion-input >
+    <ion-input [(ngModel)]="title" required></ion-input>
   </ion-item>
-    <ion-item>
-      <ion-label position="floating">Description</ion-label>
-    <ion-textarea label="Description" label-placement="floating"></ion-textarea>
+
+  <ion-item>
+    <ion-label position="floating">Description</ion-label>
+    <ion-textarea [(ngModel)]="description"></ion-textarea>
   </ion-item>
+
   <ion-item>
     <ion-label position="floating">Category</ion-label>
-    <ion-select label="Category" interface="popover">
-      <ion-select-option value="discipline">Discipline</ion-select-option>
-      <ion-select-option value="facilities">Facilities</ion-select-option>
-      <ion-select-option value="activities">Activities</ion-select-option>
-      <ion-select-option value="others">Others</ion-select-option>
+    <ion-select [(ngModel)]="category" interface="popover">
+      <ion-select-option value="Discipline">Discipline</ion-select-option>
+      <ion-select-option value="Facilities">Facilities</ion-select-option>
+      <ion-select-option value="Activities">Activities</ion-select-option>
+      <ion-select-option value="Others">Others</ion-select-option>
     </ion-select>
   </ion-item>
-  <ion-button expand="block">Submit</ion-button>
+
+  <ion-button expand="full" shape="round" (click)="submitFeedback()" style="--background: #681380">
+    Submit
+  </ion-button>
 </ion-content>

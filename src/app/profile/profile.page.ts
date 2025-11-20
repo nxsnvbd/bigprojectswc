@@ -8,60 +8,93 @@ import { LoadingController, ToastController } from '@ionic/angular';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-  userProfile: any = {};
+  userProfile: any = null;
+  docId: string = '';
+  isEditing: boolean = false; // track edit mode
 
   constructor(
+    private firestore: AngularFirestore,
     private loadingCtrl: LoadingController,
-    private toastCtrl: ToastController,
-    private firestore: AngularFirestore
-  ) { }
+    private toastCtrl: ToastController
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   ionViewWillEnter() {
     this.getUserProfile();
   }
 
   async getUserProfile() {
-    //show loader
-    let loader = await this.loadingCtrl.create({
-      message: "Please wait..."
-    });
-    loader.present();
+    const loader = await this.loadingCtrl.create({ message: 'Loading profile...' });
+    await loader.present();
 
     try {
-      const useremaillocalstore = localStorage.getItem('useremail');
+      const userEmail = localStorage.getItem('useremail');
+      if (!userEmail) {
+        this.showToast('No logged-in user found.');
+        loader.dismiss();
+        return;
+      }
+
       this.firestore
-        .collection("register", (ref) => ref.where("email", "==", useremaillocalstore))
+        .collection('users', ref => ref.where('email', '==', userEmail))
         .snapshotChanges()
-        .subscribe((data: any) => {
-          if (data.length > 0) {
-            const e = data[0];
+        .subscribe((res: any) => {
+          if (res.length > 0) {
+            this.docId = res[0].payload.doc.id;
+            const data = res[0].payload.doc.data();
             this.userProfile = {
-              name: e.payload.doc.data()["name"],
-              email: e.payload.doc.data()["email"],
-              password: e.payload.doc.data()["password"],
-              date: e.payload.doc.data()["date"],
-              telephone: e.payload.doc.data()["telephone"],
-              address: e.payload.doc.data()["address"],
+              name: data.name,
+              email: data.email,
+              username: data.username,
+              password: data.password
             };
           } else {
-            this.userProfile = null; // No matching document found
+            this.userProfile = null;
+            this.showToast('User not found');
           }
-
           loader.dismiss();
         });
-
-    } catch (e: any) {
-      this.showToast(e);
+    } catch (error: any) {
+      loader.dismiss();
+      this.showToast(error.message || 'Error fetching profile');
     }
   }
 
-  showToast(message: string) {
+  enableEdit() {
+    this.isEditing = true;
+  }
+
+  async saveProfile() {
+    if (!this.userProfile.name || !this.userProfile.username || !this.userProfile.password) {
+      this.showToast('Please fill in all fields');
+      return;
+    }
+
+    const loader = await this.loadingCtrl.create({ message: 'Saving profile...' });
+    await loader.present();
+
+    try {
+      await this.firestore.collection('users').doc(this.docId).update({
+        name: this.userProfile.name,
+        username: this.userProfile.username,
+        password: this.userProfile.password
+      });
+
+      this.isEditing = false; // disable edit mode after saving
+      this.showToast('Profile updated successfully!');
+    } catch (error: any) {
+      this.showToast(error.message || 'Error updating profile');
+    }
+
+    loader.dismiss();
+  }
+
+  private showToast(msg: string) {
     this.toastCtrl.create({
-      message: message,
-      duration: 3000
-    }).then(toastData => toastData.present());
+      message: msg,
+      duration: 3000,
+      position: 'bottom'
+    }).then(toast => toast.present());
   }
 }

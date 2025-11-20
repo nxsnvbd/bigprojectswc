@@ -1,6 +1,6 @@
 <ion-header>
-  <ion-toolbar color="danger" class="ion-text-center">
-   <ion-title>Login</ion-title>
+  <ion-toolbar style="--background: #681380; --color: #ffffff" class="ion-text-center">
+   <ion-title>LOGIN</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -12,14 +12,20 @@
 
   <ion-item>
     <ion-label position="floating">Password</ion-label>
-    <ion-input type="password" [(ngModel)]="user.password" required></ion-input >
+    <ion-input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="user.password" required></ion-input >
+      <ion-icon 
+      slot="end" 
+      [name]="showPassword ? 'eye-off' : 'eye'" 
+      (click)="togglePasswordVisibility()" 
+      style="cursor: pointer;">
+    </ion-icon>
   </ion-item>
 
-  <ion-button class="ion-padding" expand="full" shape="round" color="danger" (click)="login(user)">
+  <ion-button class="ion-padding" expand="full" shape="round" style="--background: #681380; --color: #ffffff" (click)="login(user)">
     Sign In
   </ion-button>
 
-  <ion-button class="ion-padding" expand="full" shape="round" color="light" [routerLink]="['/register']">
+  <ion-button class="ion-padding" expand="full" shape="round" style="--background: #f4f4f4; --color: #000000" [routerLink]="['/register']">
     Don't have an account?
   </ion-button>
 </ion-content>

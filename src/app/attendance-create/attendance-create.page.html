@@ -1,6 +1,5 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Create Attendance</ion-title>
+  <ion-toolbar style="--background: #681380; --color: #ffffff">
     <ion-buttons slot="start">
       <ion-menu-button menu="main-menu"></ion-menu-button>
       <ion-back-button></ion-back-button>
@@ -9,10 +8,36 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <h3 align="center"><strong>Create New Attendance</strong></h3>
+  <h2 align="center"><strong>Create New Attendance</strong></h2>
+
+  <!-- Event Title -->
   <ion-item>
     <ion-label position="floating">Event Title</ion-label>
-    <ion-input label="Enter Event Title" label-placement="floating"></ion-input>
+    <ion-input [(ngModel)]="eventTitle"></ion-input>
   </ion-item>
-  <ion-button expand="block">Create Event</ion-button>
+
+  <!-- Add some space -->
+  <div style="height: 16px;"></div>
+
+  <!-- Event Date -->
+  <ion-item>
+    <ion-label position="floating">Event Date</ion-label>
+    <ion-datetime
+      display-format="DD MMM YYYY"
+      picker-format="DD MMM YYYY"
+      [(ngModel)]="eventDate">
+    </ion-datetime>
+  </ion-item>
+
+  <!-- Add space before button -->
+  <div style="height: 24px;"></div>
+
+  <!-- Submit Button -->
+  <ion-button
+    expand="full"
+    shape="round"
+    (click)="createAttendance()"
+    style="--background: #681380">
+    Create Event
+  </ion-button>
 </ion-content>

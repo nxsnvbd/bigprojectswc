@@ -1,54 +1,109 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar style="--background: #681380; --color: #ffffff">
     <ion-buttons slot="start">
       <ion-menu-button menu="main-menu"></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <h3 align="center"><strong>Dashboard</strong></h3>
-  <ion-list>
-    <ion-card>
+<ion-content class="ion-padding">
+  <h1 class="ion-text-center"><strong>Dashboard</strong></h1>
+
+  <!-- 📰 Announcements List -->
+  <ion-list *ngIf="announcements$ | async as announcements; else noAnnouncements">
+    <ion-card
+      *ngFor="let item of announcements"
+      class="ion-margin-bottom"
+      style="--background: #F3EDF5; border-radius: 16px;"
+    >
+      <!-- Announcement Image (clickable) -->
+      <ion-img
+        *ngIf="item.photo"
+        [src]="item.photo"
+        (click)="openImagePreview(item.photo)"
+        style="border-radius: 16px 16px 0 0; cursor: pointer;"
+      ></ion-img>
+
+      <!-- Title -->
       <ion-card-header>
-        <ion-card-title>Announcement Title</ion-card-title>
-        <ion-card-subtitle>12 Aug 2024</ion-card-subtitle>
+        <ion-card-title>
+          <strong>{{ item.title }}</strong>
+        </ion-card-title>
       </ion-card-header>
+
+      <!-- Details -->
       <ion-card-content>
-        <p>This is the content of the announcement.</p>
+        <p class="ion-text-justify">{{ item.details }}</p>
+
+        <!-- 🗑️ Delete Button (Admins Only) -->
+        <ion-button
+          *ngIf="userRole === 'admin'"
+          expand="block"
+          shape="round"
+          color="danger"
+          (click)="deleteAnnouncement(item.id)"
+          class="ion-margin-top"
+        >
+          <ion-icon name="trash" slot="start"></ion-icon>
+          Delete
+        </ion-button>
       </ion-card-content>
     </ion-card>
   </ion-list>
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button routerLink="/announcement-create">
+  <!-- 🕊️ No Announcements -->
+  <ng-template #noAnnouncements>
+    <div class="ion-text-center ion-padding">
+      <ion-icon name="notifications-off-outline" size="large" color="medium"></ion-icon>
+      <p>No announcements available</p>
+    </div>
+  </ng-template>
+
+  <!-- ➕ Floating Add Button (Admins Only) -->
+  <ion-fab *ngIf="userRole === 'admin'" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button
+      style="--background: #681380; --color: #ffffff"
+      routerLink="/announcement-create"
+    >
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 </ion-content>
 
+<!-- 🧭 Footer Navigation -->
 <ion-footer>
   <ion-toolbar>
-    <ion-buttons slot="start" class="footer-buttons">
-      <ion-button [routerLink]="['/main']">
-        <ion-icon slot="icon-only" name="home"></ion-icon>
+    <ion-buttons slot="start" class="footer-buttons" style="justify-content: space-around; width: 100%;">
+      <ion-button routerLink="/main">
+        <ion-icon slot="icon-only" name="home-outline"></ion-icon>
       </ion-button>
-      <ion-button [routerLink]="['/attendance']">
+      <ion-button routerLink="/attendance">
         <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
       </ion-button>
-      <ion-button [routerLink]="['/media']">
+      <ion-button routerLink="/media">
         <ion-icon slot="icon-only" name="images-outline"></ion-icon>
       </ion-button>
-      <ion-button [routerLink]="['/feedback']">
+      <ion-button routerLink="/feedback">
         <ion-icon slot="icon-only" name="chatbox-outline"></ion-icon>
       </ion-button>
-      <ion-button [routerLink]="['/login']">
-        <ion-icon slot="icon-only" name="log-out"></ion-icon>
+      <ion-button *ngIf="userRole === 'member'" routerLink="/profile">
+        <ion-icon slot="icon-only" name="person-outline"></ion-icon>
       </ion-button>
-    </ion-buttons>
-    <ion-buttons slot="primary">
+      <ion-button routerLink="/login">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-footer>
 
-
+<!-- 🖼️ Image Preview Modal -->
+<ion-modal [isOpen]="isImageModalOpen" (didDismiss)="closeImagePreview()">
+  <ng-template>
+    <ion-content class="ion-padding" style="--background: rgba(0, 0, 0, 0.9); display: flex; align-items: center; justify-content: center;">
+      <ion-img [src]="selectedImage" style="max-width: 100%; max-height: 90%; border-radius: 12px;"></ion-img>
+      <ion-button color="light" fill="clear" (click)="closeImagePreview()" style="position: absolute; top: 16px; right: 16px;">
+        <ion-icon name="close" size="large"></ion-icon>
+      </ion-button>
+    </ion-content>
+  </ng-template>
+</ion-modal>

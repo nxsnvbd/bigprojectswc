@@ -1,31 +1,87 @@
 <ion-header>
-  <ion-toolbar>
-        <ion-buttons slot="start">
+  <ion-toolbar style="--background: #681380; --color: #ffffff">
+    <ion-buttons slot="start">
       <ion-menu-button menu="main-menu"></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <h3 align="center"><strong>Feedback/Complaint</strong></h3>
-  <ion-grid>
-    <ion-row>
-      <ion-col>Date</ion-col>
-      <ion-col>Title</ion-col>
-      <ion-col>Status</ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>1 Aug 2025</ion-col>
-      <ion-col><ion-button [routerLink]="['/feedback-details']">
-        Title
-      </ion-button></ion-col>
-      <ion-col>Pending</ion-col>
-    </ion-row>
-  </ion-grid>
+<ion-content class="ion-padding">
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button routerLink="/feedback-create">
+  <h2 align="center"><strong>Feedback / Complaint</strong></h2>
+
+  <!-- ✅ If there are no feedbacks -->
+  <div *ngIf="feedbacks.length === 0" class="ion-text-center ion-margin-top">
+    <ion-icon name="chatbox-ellipses-outline" size="large" color="medium"></ion-icon>
+    <p style="font-size: 1.1em; color: gray; margin-top: 8px;">No feedback/complaint submitted.</p>
+  </div>
+
+  <!-- ✅ Organized list -->
+  <ion-list *ngIf="feedbacks.length > 0">
+    <ion-card *ngFor="let fb of feedbacks" style="--background: #F5F2F6">
+      <ion-card-header>
+        <ion-card-title>
+          <strong>{{ fb.title }}</strong>
+        </ion-card-title>
+        <ion-card-subtitle>
+          {{ fb.dateSubmitted?.toDate() | date: 'd MMM yyyy' }}
+        </ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        <div class="status-row">
+          <span class="status-label">Status:</span>
+          <span [ngClass]="{
+            'status-pending': fb.status === 'Pending',
+            'status-progress': fb.status === 'In Progress',
+            'status-completed': fb.status === 'Completed',
+            'status-rejected': fb.status === 'Rejected'
+          }">
+            {{ fb.status }}
+          </span>
+        </div>
+
+        <ion-button
+          fill="outline"
+          expand="block"
+          color="dark"
+          [routerLink]="['/feedback-details', fb.id]" shape="round">
+          View Details
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+
+  <!-- Floating Add Button (Members Only) -->
+  <ion-fab *ngIf="userRole === 'member'" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button routerLink="/feedback-create" style="--background: #681380">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="start" class="footer-buttons">
+      <ion-button [routerLink]="['/main']">
+        <ion-icon slot="icon-only" name="home-outline"></ion-icon>
+      </ion-button>
+      <ion-button [routerLink]="['/attendance']">
+        <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
+      </ion-button>
+      <ion-button [routerLink]="['/media']">
+        <ion-icon slot="icon-only" name="images-outline"></ion-icon>
+      </ion-button>
+      <ion-button [routerLink]="['/feedback']">
+        <ion-icon slot="icon-only" name="chatbox-outline"></ion-icon>
+      </ion-button>
+      <ion-button *ngIf="userRole === 'member'" [routerLink]="['/profile']">
+        <ion-icon slot="icon-only" name="person-outline"></ion-icon>
+      </ion-button>
+      <ion-button [routerLink]="['/login']">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

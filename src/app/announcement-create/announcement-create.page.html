@@ -1,6 +1,5 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Create Announcement</ion-title>
+  <ion-toolbar style="--background: #681380; --color: #ffffff">
     <ion-buttons slot="start">
       <ion-menu-button menu="main-menu"></ion-menu-button>
       <ion-back-button></ion-back-button>
@@ -8,21 +7,61 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <h3 align="center"><strong>Create New Announcement</strong></h3>
+<ion-content class="ion-padding">
+  <h2 align="center"><strong>Create New Announcement</strong></h2>
+
+  <!-- Title -->
   <ion-item>
     <ion-label position="floating">Title</ion-label>
-    <ion-input label="Enter Title" label-placement="floating"></ion-input>
-  </ion-item>
+    <ion-input [(ngModel)]="title"></ion-input>
+  </ion-item> 
+
+  <!-- Description -->
   <ion-item>
     <ion-label position="floating">Description</ion-label>
-    <ion-textarea label="Enter Description" label-placement="floating"></ion-textarea>
+    <ion-textarea [(ngModel)]="details"></ion-textarea>
   </ion-item>
-  <ion-item>
-    <ion-label position="floating">Upload Poster</ion-label>
-    <ion-input label="Photo URL (optional)" label-placement="floating"></ion-input>
+
+  <!-- Poster Upload -->
+  <ion-item lines="none">
+    <ion-label>Poster</ion-label>
   </ion-item>
-  <ion-button expand="block">Add Announcement</ion-button>
+
+  <div class="file-upload">
+    <ion-button expand="block" color="medium" (click)="fileInput.click()" shape="round">
+      <ion-icon name="image-outline" slot="start"></ion-icon>
+      Choose Poster
+    </ion-button>
+
+    <!-- Hidden File Input -->
+    <input
+      type="file"
+      hidden
+      #fileInput
+      (change)="onFileSelected($event)"
+      accept="image/jpeg,image/jpg,image/png,image/webp"
+    />
+  </div>
+
+  <!-- Show selected photo file name -->
+  <ion-item *ngIf="photo">
+    <ion-icon name="image-outline" slot="start" color="primary"></ion-icon>
+    <ion-label>{{ photo.name }}</ion-label>
+  </ion-item>
+
+  <!-- Show image preview -->
+  <div *ngIf="previewUrl" class="ion-text-center ion-padding">
+    <ion-img [src]="previewUrl" style="max-width: 250px; border-radius: 12px; margin-top: 10px;"></ion-img>
+  </div>
+
+  <br>
+
+  <!-- Add Button -->
+  <ion-button
+    expand="full"
+    shape="round"
+    (click)="addAnnouncement()"
+    style="--background: #681380; --color: #ffffff">
+    Add Announcement
+  </ion-button>
 </ion-content>
-
-
